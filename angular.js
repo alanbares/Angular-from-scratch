@@ -15,9 +15,21 @@
       });
     };
 
+    this.$digest = function() {
+      this.$$watchers.forEach(function(watcher) {
+        var newValue = watcher.watcherFn();
+        var oldValue = watcher.last;
+        if(newValue !== oldValue) {
+          watcher.listenerFn(newValue, oldValue);
+          watcher.last = newValue;
+        }
+      });
+    };
+
   };
 
   var $scope = new Scope();
+
   // compiler
 
 // tests & logs
@@ -29,3 +41,5 @@ $scope.$watch(function() {
 }, function(newValue, oldValue) {
   console.log('hello changed from', oldValue, 'to', newValue);
 });
+
+$scope.$digest();
