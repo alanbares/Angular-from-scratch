@@ -41,8 +41,12 @@
   // compiler
 
   var $$directives = {
-    'ng-bind': function() {
-      console.log('ng-bind');
+    'ng-bind': function($scope, $element, $attributes) {
+      $scope.$watch(function() {
+        return $scope[$attributes['ng-bind'].value];
+      }, function(newValue) {
+        $element.innerHTML = newValue;
+      });
     }
   };
 
@@ -54,7 +58,7 @@
     Array.prototype.forEach.call(element.attributes, function(attribute) {
       var directive = $$directives[attribute.name];
       if(directive) {
-        directive();
+        directive($scope, element, element.attributes);
       }
     });
   };
@@ -63,12 +67,6 @@
 
 
 // tests & logs
-
-$scope.$watch(function() {
-  return $scope.hello;
-}, function(newValue, oldValue) {
-  console.log('hello changed from', oldValue, 'to', newValue);
-});
 
 $scope.$apply(function() {
   $scope.hello = 'Hello World !!';
