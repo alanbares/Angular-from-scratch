@@ -26,6 +26,14 @@
       });
     };
 
+    this.$apply = function(exprFn) {
+      try{
+        exprFn();
+      } finally {
+      this.$digest();
+      }
+    };
+
   };
 
   var $scope = new Scope();
@@ -34,12 +42,16 @@
 
 // tests & logs
 
-$scope.hello = 'Hello World';
-
 $scope.$watch(function() {
   return $scope.hello;
 }, function(newValue, oldValue) {
   console.log('hello changed from', oldValue, 'to', newValue);
 });
 
-$scope.$digest();
+$scope.$apply(function() {
+  $scope.hello = 'Hello World !!';
+});
+
+
+
+
