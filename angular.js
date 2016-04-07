@@ -39,11 +39,23 @@
   var $scope = new Scope();
 
   // compiler
-  var $compile = function(element, $scope) {
-    console.log('$compile', element)
 
+  var $$directives = {
+    'ng-bind': function() {
+      console.log('ng-bind');
+    }
+  };
+
+  var $compile = function(element, $scope) {
     Array.prototype.forEach.call(element.children, function(child) {
       $compile(child, $scope);
+    });
+
+    Array.prototype.forEach.call(element.attributes, function(attribute) {
+      var directive = $$directives[attribute.name];
+      if(directive) {
+        directive();
+      }
     });
   };
 
