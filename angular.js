@@ -47,6 +47,13 @@
       }, function(newValue) {
         $element.innerHTML = newValue;
       });
+    },
+    'ng-model': function($scope, $element, $attributes) {
+      $scope.$watch(function() {
+        return $scope[$attributes['ng-model'].value];
+      }, function(newValue) {
+        $element.value = newValue;
+      });
     }
   };
 
