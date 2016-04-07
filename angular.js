@@ -30,7 +30,7 @@
       try{
         exprFn();
       } finally {
-      this.$digest();
+        this.$digest();
       }
     };
 
