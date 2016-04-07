@@ -54,6 +54,13 @@
       }, function(newValue) {
         $element.value = newValue;
       });
+
+      $element.addEventListener('keyup', function() {
+        $scope.$apply(function() {
+          $scope[$attributes['ng-model'].value]= $element.value;
+        });
+      });
+
     }
   };
 
@@ -73,11 +80,6 @@
   $compile(document.body, $scope);
 
 
-// tests & logs
-
-$scope.$apply(function() {
-  $scope.hello = 'Hello World !!';
-});
 
 
 
