@@ -39,6 +39,16 @@
   var $scope = new Scope();
 
   // compiler
+  var $compile = function(element, $scope) {
+    console.log('$compile', element)
+
+    Array.prototype.forEach.call(element.children, function(child) {
+      $compile(child, $scope);
+    });
+  };
+
+  $compile(document.body, $scope);
+
 
 // tests & logs
 
